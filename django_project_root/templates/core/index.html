@@ -1,13 +1,17 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  </head>
-  <body>
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  </body>
-</html>
+{% extends "core/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block header %}Welcome to My Django App{% endblock %}
+
+{% block content %}
+<!-- Categories -->
+{% include 'core/categories.html' %}
+
+<!-- Listings -->
+{% include 'core/listing.html' %}
+
+<!-- Why Choose Us -->
+{% include 'core/whyChooseUs.html' %}
+
+{% endblock %}

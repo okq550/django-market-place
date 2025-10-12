@@ -1,6 +1,10 @@
 from django.shortcuts import render
 
-def home(request):
-    return render(request, 'core.index.html', {})
+def index(request):
+    return render(request, 'core/index.html', {})
 
+def login(request):
+    return render(request, 'core/login.html', {})
 
+def contact(request):
+    return render(request, 'core/contact.html', {})
