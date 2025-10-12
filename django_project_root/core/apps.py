@@ -1,7 +1,6 @@
 from django.apps import AppConfig
 
 
-class App1Config(AppConfig):
+class CoreConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'django_project_root.app_1'
-
+    name = 'django_project_root.core'
