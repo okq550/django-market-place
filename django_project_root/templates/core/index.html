@@ -6,10 +6,10 @@
 
 {% block content %}
 <!-- Categories -->
-{% include 'core/categories.html' %}
+{% include 'core/categories.html' with categories=categories only %}
 
 <!-- Listings -->
-{% include 'core/listing.html' %}
+{% include 'core/listing.html' with items=items only %}
 
 <!-- Why Choose Us -->
 {% include 'core/whyChooseUs.html' %}

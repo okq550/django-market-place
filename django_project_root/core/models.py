@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='categories_images', blank=True, null=True)
 
     class Meta:
         ordering = ("name",)
@@ -17,6 +18,7 @@ class Item(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     price = models.FloatField()
+    image = models.ImageField(upload_to='items_images', blank=True, null=True)
     is_sold = models.BooleanField(default=False)
     category = models.ForeignKey(
         Category, related_name="items", on_delete=models.CASCADE

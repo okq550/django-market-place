@@ -3,7 +3,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-3xl font-bold text-gray-900 mb-8">Browse by Category</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            {% for category in categories %}
             <a href="#" class="group">
+                <div
+                    class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center hover:shadow-lg transition transform hover:-translate-y-1">
+                    <img 
+                        src="{{ category.image.url|default:'/static/images/default.png' }}" 
+                        alt="{{ category.name }}"
+                        class="w-32 h-32 mx-auto mb-3 object-cover rounded-lg"
+                    />
+                    <h3 class="font-semibold text-gray-900">{{ category.name }}</h3>
+                    <p class="text-gray-400">{{ category.items.count }} items</p>
+                </div>
+            </a>
+            {% endfor %}
+            <!-- <a href="#" class="group">
                 <div
                     class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center hover:shadow-lg transition transform hover:-translate-y-1">
                     <svg class="w-12 h-12 mx-auto mb-3 text-blue-600" fill="none" stroke="currentColor"
@@ -72,7 +86,7 @@
                     </svg>
                     <h3 class="font-semibold text-gray-900">Art & Crafts</h3>
                 </div>
-            </a>
+            </a> -->
         </div>
     </div>
 </section>
