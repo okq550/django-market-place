@@ -16,32 +16,32 @@ services:
       timeout: 5s
       retries: 5
 
-  redis:
-    image: redis:7-alpine
-    container_name: ${PROJECT_NAME:-project_name}_redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: ${PROJECT_NAME:-project_name}_redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
-  web:
-    build: .
-    container_name: ${PROJECT_NAME:-project_name}_web
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/app
-    environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-${PROJECT_NAME:-project_name}_user}:${POSTGRES_PASSWORD:-${PROJECT_NAME:-project_name}_pass}@postgres:5432/${POSTGRES_DB:-${PROJECT_NAME:-project_name}_db}
-    depends_on:
-      postgres:
-        condition: service_healthy
+  # web:
+  #   build: .
+  #   container_name: ${PROJECT_NAME:-project_name}_web
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - .:/app
+  #   environment:
+  #     - DATABASE_URL=postgresql://${POSTGRES_USER:-${PROJECT_NAME:-project_name}_user}:${POSTGRES_PASSWORD:-${PROJECT_NAME:-project_name}_pass}@postgres:5432/${POSTGRES_DB:-${PROJECT_NAME:-project_name}_db}
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
 
 volumes:
   postgres_data:
-  redis_data:
+  # redis_data:
