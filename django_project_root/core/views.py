@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Category, Item
+from django.shortcuts import render
+from item.models import Category, Item
 
 
 def index(request):
@@ -9,19 +9,6 @@ def index(request):
     categories = Category.objects.all()[0:6]
     return render(
         request, "core/index.html", {"items": items, "categories": categories}
-    )
-
-
-def item_detail(request, pk):
-    # item = get_object_or_404(Item, pk=pk, is_sold=False)
-    item = get_object_or_404(Item, pk=pk)
-    related_items = (
-        Item.objects.filter(category=item.category, is_sold=False)
-        .exclude(pk=pk)
-        .order_by("-created_at")[0:4]
-    )
-    return render(
-        request, "core/item_detail.html", {"item": item, "related_items": related_items}
     )
 
 
