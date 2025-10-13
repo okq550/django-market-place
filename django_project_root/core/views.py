@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from item.models import Category, Item
-
+from django_project_root.item.models import Category, Item
 
 def index(request):
     # Get 6 items

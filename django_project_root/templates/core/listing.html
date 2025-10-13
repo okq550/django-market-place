@@ -11,7 +11,7 @@
             <!-- Product Card 1 -->
             <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition overflow-hidden group">
                 <div class="relative overflow-hidden bg-gray-200 aspect-square">
-                    <a href="{% url 'item_detail' item.id %}">
+                    <a href="{% url 'item:item_detail' item.id %}">
                         <img src="{{ item.image.url|default:'/static/images/default.png' }}" alt="{{ item.name }}"
                             class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
                     </a>
