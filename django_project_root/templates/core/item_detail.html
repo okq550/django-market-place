@@ -1,6 +1,6 @@
 {% extends "core/base.html" %}
 
-{% block title %}{{ item.name }} - My Django App{% endblock %}
+{% block title %}{{ item.name }} - MarketPlace{% endblock %}
 
 {% block header %}{{ item.name }}{% endblock %}
 
@@ -62,13 +62,45 @@
                                     {% if item.is_sold %}
                                     Out of stock
                                     {% else %}
-                                    available
+                                    Available
                                     {% endif %}
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Related Items -->
+                {% if related_items %}
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Related Items</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                        {% for related in related_items %}
+                        <a href="{% url 'item_detail' related.id %}"
+                            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
+                            <div class="h-48 bg-gray-200 flex items-center justify-center">
+                                {% if related.image %}
+                                <img src="{{ related.image.url }}" alt="{{ related.name }}"
+                                    class="w-full h-full object-cover">
+                                {% else %}
+                                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                {% endif %}
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-semibold text-gray-900 mb-2">{{ related.name }}</h3>
+                                <p class="text-blue-600 font-bold">${{ related.price }}</p>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
                 <!-- Action Buttons -->
                 <!-- <div class="flex space-x-4">
           {% if item.stock > 0 %}

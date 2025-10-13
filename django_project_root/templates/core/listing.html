@@ -15,8 +15,14 @@
                         <img src="{{ item.image.url|default:'/static/images/default.png' }}" alt="{{ item.name }}"
                             class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
                     </a>
-                    <!-- <span
-                        class="absolute top-3 right-3 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">Featured</span> -->
+                    <span
+                        class="absolute top-3 right-3 {% if item.is_sold %}text-red-600{% else %}text-green-600{% endif %} bg-gray-100 px-3 py-1 rounded-full text-sm font-semibold">
+                        {% if item.is_sold %}
+                        Out of stock
+                        {% else %}
+                        Available
+                        {% endif %}
+                    </span>
                 </div>
                 <div class="p-4">
                     <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">{{ item.description }}
