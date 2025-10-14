@@ -21,7 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', include('django_project_root.core.urls')),
     path('items/', include('django_project_root.item.urls')),
-    path('admin/', admin.site.urls),
+    path('dashboard/', include('django_project_root.dashboard.urls')),
 ] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
