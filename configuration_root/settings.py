@@ -33,6 +33,11 @@ INTERNAL_IPS = [
     # ...
 ]
 
+# Overwrite Login + Logout rediretion URLs
+LOGIN_URL = '/signin/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 # Application definition
 
 INSTALLED_APPS = [
