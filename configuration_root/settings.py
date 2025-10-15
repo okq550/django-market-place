@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_project_root.core',
     'django_project_root.item',
     'django_project_root.dashboard',
+    'django_project_root.conversation',
 ]
 
 MIDDLEWARE = [

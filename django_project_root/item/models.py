@@ -11,7 +11,7 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
 
 class Item(models.Model):
@@ -27,4 +27,4 @@ class Item(models.Model):
     created_by = models.ForeignKey(User, related_name="items", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"

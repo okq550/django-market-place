@@ -1,9 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+# from django.http import 
+from django.db.models import Q
 
 from .models import Item
 from .forms import NewItemForm, EditItemForm
+
+
+def browse(reequest):
+    query = reequest.GET.get('query', '')
+    items = Item.objects.filter(is_sold=False)
+
+    if query:
+        items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
+
+    return render(reequest, "item/browse.html", {"items": items, 'query': query})
 
 
 def detail(request, pk):
@@ -14,6 +25,8 @@ def detail(request, pk):
         .exclude(pk=pk)
         .order_by("-created_at")[0:4]
     )
+
+    print(f"User: {request.user}, Item User: {item.created_by}")
     return render(
         request, "item/detail.html", {"item": item, "related_items": related_items}
     )
@@ -31,7 +44,7 @@ def new(request):
             return redirect("item:detail", pk=item.id)
     else:
         form = NewItemForm()
-    return render(request, "item/new.html", {"form": form})
+    return render(request, "item/form.html", {"form": form, 'title': 'New Item'})
 
 
 @login_required
@@ -55,20 +68,18 @@ def edit(request, pk):
     #     return HttpResponse(f"No item with ID {pk} exists in database")
 
     item = get_object_or_404(Item, pk=pk)
-    if request.method == "POST" and item.created_by==request.user:
-        form = EditItemForm(
-            request.POST, request.FILES, instance=item
-        )
+    if request.method == "POST" and item.created_by == request.user:
+        form = EditItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             form.save()
             return redirect("item:detail", pk=pk)
     else:
-        form = EditItemForm(instance=item)  # ✅ Pass instance
+        form = EditItemForm(instance=item)
     return render(
         request,
-        "item/edit.html",
+        "item/form.html",
         {
             "form": form,
-            "item": item,  # Optional: if you want to reference item in template
+            "title": "Edit Item"
         },
     )

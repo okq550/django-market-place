@@ -66,45 +66,53 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-6"><div>
-                        <a href="{% url 'item:edit' item.id %}" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:green transition font-medium">Edit</a>
-                        <a href="{% url 'item:delete' item.id %}" class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">Delete</a>
+                    <div class="mb-6">
+                        <div>
+                            {% if request.user == item.created_by %}
+                            <a href="{% url 'item:edit' item.id %}"
+                                class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">Edit</a>
+                            <a href="{% url 'item:delete' item.id %}"
+                                class="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium">Delete</a>
+                            {% else %}
+                            <a href="{% url 'conversation:new' item.id %}"
+                                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">Send Message</a>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
 
-                <!-- Related Items -->
-                {% if related_items %}
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Related Items</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                        {% for related in related_items %}
-                        <a href="{% url 'item:detail' related.id %}"
-                            class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-                            <div class="h-48 bg-gray-200 flex items-center justify-center">
-                                {% if related.image %}
-                                <img src="{{ related.image.url }}" alt="{{ related.name }}"
-                                    class="w-full h-full object-cover">
-                                {% else %}
-                                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                {% endif %}
-                            </div>
-                            <div class="p-4">
-                                <h3 class="font-semibold text-gray-900 mb-2">{{ related.name }}</h3>
-                                <p class="text-blue-600 font-bold">${{ related.price }}</p>
-                            </div>
-                        </a>
-                        {% endfor %}
+                    <!-- Related Items -->
+                    {% if related_items %}
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Related Items</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                            {% for related in related_items %}
+                            <a href="{% url 'item:detail' related.id %}"
+                                class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
+                                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                                    {% if related.image %}
+                                    <img src="{{ related.image.url }}" alt="{{ related.name }}"
+                                        class="w-full h-full object-cover">
+                                    {% else %}
+                                    <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                    {% endif %}
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="font-semibold text-gray-900 mb-2">{{ related.name }}</h3>
+                                    <p class="text-blue-600 font-bold">${{ related.price }}</p>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-                {% endif %}
+                    {% endif %}
 
-                <!-- Action Buttons -->
-                <!-- <div class="flex space-x-4">
+                    <!-- Action Buttons -->
+                    <!-- <div class="flex space-x-4">
           {% if item.stock > 0 %}
           <button class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
             Add to Cart
@@ -120,8 +128,8 @@
           </button>
           {% endif %}
         </div> -->
+                </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}

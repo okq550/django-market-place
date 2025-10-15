@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django_project_root.item.models import Category, Item
+from django.contrib.auth import logout
 from .forms import SignUpForm, SignInForm
 
 
@@ -21,7 +22,7 @@ def signin(request):
     if request.method == 'POST':
         form = SignInForm(request.POST)
         if form.is_valid():
-            redirect('core.home')
+            redirect('core:home')
     else: 
         form = SignInForm()
     return render(request, "core/signin.html", {'form': form})
@@ -32,7 +33,11 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('core/signin')
+            return redirect('core:signin')
     else:
         form = SignUpForm()
     return render(request, "core/signup.html", {"form": form})
+
+def signout(request):
+    logout(request)
+    return redirect('core:index')

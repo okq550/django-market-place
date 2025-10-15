@@ -1,0 +1,133 @@
+{% extends "core/base.html" %}
+
+{% block title %} Message {% endblock %}
+
+{% block header %} Message {% endblock %}
+
+{% block content %}
+
+<!-- Content Section -->
+<!-- Main Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Chat Area -->
+    <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+        <!-- Chat Header -->
+        <div class="p-4 border-b flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div
+                    class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                    JS
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">{{ conversation.created_by.username }}</h3>
+                    <div class="flex items-center space-x-2 text-sm text-gray-600">
+                        <!-- <span class="w-2 h-2 bg-green-500 rounded-full"></span> -->
+                        <!-- <span>Online</span> -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <button class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                        </path>
+                    </svg>
+                </button>
+                <button class="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Item Info Banner -->
+        <div class="p-4 bg-blue-50 border-b">
+            <div class="flex items-center space-x-4">
+                <img src="https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=100"
+                    alt="Item" class="w-16 h-16 rounded-lg object-cover">
+                <div class="flex-1">
+                    <h4 class="font-semibold text-gray-900">iPhone 14 Pro Max - 256GB</h4>
+                    <p class="text-sm text-gray-600">$899</p>
+                </div>
+                <a href="/item-details.html"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-semibold">
+                    View Item
+                </a>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Date Separator -->
+            <!-- <div class="flex items-center justify-center">
+                <span class="px-4 py-1 bg-gray-200 text-gray-600 text-xs rounded-full">Today</span>
+            </div> -->
+
+
+            {% for message in conversation.messages.all %}
+                {% if message.created_by == request.user %}
+                    <!-- Sent Message -->
+                    <div class="flex items-start space-x-3 justify-end">
+                        <div class="flex-1 flex flex-col items-end">
+                            <div class="bg-blue-600 text-white rounded-2xl rounded-tr-none px-4 py-3 inline-block max-w-md">
+                                <p>{{ message.content }}</p>
+                            </div>
+                            <span class="text-xs text-gray-500 mr-2 mt-1 block">10:32 AM</span>
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Received Message -->
+                    <div class="flex items-start space-x-3">
+                        <div
+                            class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                            JS
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-3 inline-block max-w-md">
+                                <p class="text-gray-900">{{ message.content }}</p>
+                            </div>
+                            <span class="text-xs text-gray-500 ml-2 mt-1 block">10:30 AM</span>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Message Input -->
+        <div class="p-4 border-t">
+            <form action="." method="POST">
+                {% csrf_token %}
+                <div class="flex items-end space-x-3">
+                    <div class="flex-1 relative">
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit"
+                        class="p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition flex-shrink-0 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </button>
+
+                    {% if form.errors or form.non_field_errors %}
+                    <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                        {% for field in form %}
+                        {{ field.errors }}
+                        {% endfor %}
+
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </form>
+            <div class="mt-2 flex items-center space-x-4 text-xs text-gray-500">
+                <span>Press Enter to send, Shift+Enter for new line</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
