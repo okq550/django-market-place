@@ -1,3 +1,5 @@
+Original project => https://github.com/SteinOveHelset/puddle/tree/main
+
 # django-base-template
 
 python3 -m venv venv
